@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unblocker by royal_snow</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #121212;
+      color: white;
+      padding-top: 50px;
+      background-image: url('/mnt/data/W4B3aXX.webp');
+      background-size: cover;
+      background-position: center;
+      transition: background-color 0.3s;
+    }
+    .dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+    .light-mode {
+      background-color: #f4f4f4;
+      color: #111;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    input {
+      width: 300px;
+    }
+    button {
+      background-color: #1f8ef1;
+      color: white;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 50px;
+      color: #888;
+    }
+    #error-message {
+      color: red;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body class="dark-mode">
+  <h1>Site Unblocker</h1>
+  <p>Enter a site to try to unblock it (powered by Google Translate).</p>
+  <input list="sites" type="text" id="siteInput" placeholder="e.g. example.com">
+  <datalist id="sites">
+    <option value="youtube.com">
+    <option value="reddit.com">
+    <option value="discord.com">
+    <option value="github.com">
+    <option value="twitch.tv">
+  </datalist>
+  <button onclick="unblock()">Unblock</button>
+  <button onclick="toggleMode()">🌙 Toggle Mode</button>
+
+  <div id="error-message">❌ Could not open the site. Check the URL.</div>
+
+  <script>
+    function unblock() {
+      let site = document.getElementById('siteInput').value;
+      if (!site) return;
+      if (!site.startsWith('http')) {
+        site = 'http://' + site;
+      }
+      const encodedSite = encodeURIComponent(site);
+      const url = `https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=${encodedSite}`;
+      const win = window.open(url, '_blank');
+      if (!win || win.closed || typeof win.closed == 'undefined') {
+        document.getElementById('error-message').style.display = 'block';
+      }
+    }
+
+    function toggleMode() {
+      const body = document.body;
+      if (body.classList.contains('dark-mode')) {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+      } else {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+      }
+    }
+
+    document.getElementById('siteInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        unblock();
+      }
+    });
+  </script>
+
+  <footer>
+    <p>by royal_snow</p>
+  </footer>
+</body>
+</html>

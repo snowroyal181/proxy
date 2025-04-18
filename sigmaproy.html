@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Private Proxy | TRASH</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: monospace;
+      color: white;
+      text-align: center;
+      background: url('/mnt/data/500x500-000000-80-0-0.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    input, button {
+      padding: 12px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      width: 300px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #1f8ef1;
+      color: white;
+      cursor: pointer;
+    }
+
+    #error {
+      color: red;
+      margin-top: 15px;
+      display: none;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>🔒 Private Proxy</h1>
+    <p>Enter a site to access it stealthily.</p>
+    <input type="text" id="urlInput" placeholder="e.g. reddit.com">
+    <button onclick="openProxy()">Unblock</button>
+    <div id="error">❌ Could not open the site. Check your browser settings.</div>
+    <footer>powered by royal_snow + TRASH</footer>
+  </div>
+
+  <script>
+    function openProxy() {
+      let input = document.getElementById('urlInput').value;
+      if (!input) return;
+
+      if (!input.startsWith('http')) {
+        input = 'http://' + input;
+      }
+
+      const encoded = encodeURIComponent(input);
+      const proxyUrl = `https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=${encoded}`;
+
+      const win = window.open(proxyUrl, '_blank');
+      if (!win || win.closed || typeof win.closed == 'undefined') {
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    // Optional: Enter key support
+    document.getElementById('urlInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') openProxy();
+    });
+  </script>
+</body>
+</html>
